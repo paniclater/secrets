@@ -39,6 +39,7 @@
 (defroutes app-routes
   (GET "/" [] (content-type (resource-response "index.html" {:root "public"}) "text/html"))
   (GET  "/widgets" [] (response [{:name "Widget 1"} {:name "Widget 2"}]))
+  (POST "/secrets" {params :params body :body} (response body))
   ; (GET "/secrets" [] ()
   ;   (str "getting secrets: " (get-secret-for-code)))
   ; (POST "/secrets" [] ()
@@ -49,6 +50,6 @@
 
 (def app
   (-> app-routes
-    (middleware/wrap-json-body)
+    (middleware/wrap-json-body {:keywords? true})
     (middleware/wrap-json-response)
     (wrap-defaults api-defaults)))
