@@ -40,6 +40,10 @@
     {:status status} ["id = ?" id])
   (str status))
 
+(defn get-music [{code :code}]
+  (sql/query pg-db
+    (str "select status from secrets where code = '" code "'")))
+
 (def create-table
   (sql/create-table-ddl
     :secrets
@@ -62,6 +66,7 @@
   (GET  "/secrets" [] (response (get-secret-for-code)))
   (POST "/secrets" {body :body} (add-secret body))
   (PUT "/secrets" {body :body} (update-secret body))
+  (GET "/music" {params :params} (get-music params))
   (route/resources "/")
   (route/not-found "Not Found"))
 
