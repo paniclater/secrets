@@ -30,28 +30,32 @@
 (defn get-secret-for-code []
   (sql/query pg-db "select * from secrets"))
 
-(defn add-secret [{secret :secret}]
+(defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
-    {:code (code) :secret secret :status "PENDING"})
+    {:code (code) :text text :status "PENDING"})
   (code))
 
 (defn update-secret [{id :id status :status}]
   (sql/update! pg-db :secrets
     {:status status} ["id = ?" id])
-    (str status))
+  (str status))
 
-; TODO::
-; -> initialize secrets table with id, code, secret and reviewed columns
-; -> id auto incrementing
-; -> code, secret simple text fields
-; -> reviewed: enum "PENDING", "APPROVED", "REJECTED"
-; (defn init-db []
-;   (sql/create-table-ddl
-;     :secrets
-;     [:id "serial" "PRIMARY KEY"]
-;     [:code "text"]
-;     [:secret_text "text"]
-;     [:reviewed "text"]))
+(def create-table
+  (sql/create-table-ddl
+    :secrets
+    [[:id "serial" "PRIMARY KEY"]
+     [:code "text"]
+     [:text "text"]
+     [:status "text"]]))
+
+(def secrets-table-created?
+  (->
+    (sql/query pg-db
+      [(str "select count(*) from information_schema.tables where table_name='secrets'")])
+    first :count pos?))
+
+(when (not secrets-table-created?)
+  (sql/db-do-commands pg-db create-table))
 
 (defroutes app-routes
   (GET "/" [] (content-type (resource-response "index.html" {:root "public"}) "text/html"))
