@@ -7,7 +7,6 @@
             [ring.util.response :refer [content-type resource-response response]]
             [ring.middleware.json :as middleware]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
-            
 
 (defn code []
   (loop [result []]
