@@ -23,8 +23,8 @@
   {:dbtype "postgresql"
    :dbname "secrets"
    :host "localhost"
-   :user "ryanmoore"
-   :password "J2gnFFrudQLmnGbiCUiDEzWh"
+   :user "postgres"
+  ;  :password "J2gnFFrudQLmnGbiCUiDEzWh"
    :stringtype "unspecified"})
 
 (defn get-secret-for-code []
