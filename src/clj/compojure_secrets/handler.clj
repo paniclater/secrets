@@ -27,7 +27,7 @@
   ;  :password "J2gnFFrudQLmnGbiCUiDEzWh"
    :stringtype "unspecified"})
 
-(defn get-secret-for-code []
+(defn get-secrets []
   (sql/query pg-db "select * from secrets"))
 
 (defn add-secret [{text :text}]
@@ -70,7 +70,7 @@
       [:div#root [:h3 "doing some html"]]
       (include-js "/index.js")))
 
-  (GET  "/secrets" [] (response (get-secret-for-code)))
+  (GET  "/secrets" [] (response (get-secrets)))
   (POST "/secrets" {body :body} (add-secret body))
   (PUT "/secrets" {body :body} (update-secret body))
   (GET "/music" {params :params} (get-music params))
