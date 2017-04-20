@@ -33,7 +33,7 @@
 (defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
     {:code (code) :text text :status "PENDING"})
-  (code))
+  {:code (code)})
 
 (defn update-secret [{id :id status :status}]
   (sql/update! pg-db :secrets
@@ -71,7 +71,7 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
-  (POST "/secrets" {body :body} (add-secret body))
+  (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
   (GET "/music" {params :params} (get-music params))
 
