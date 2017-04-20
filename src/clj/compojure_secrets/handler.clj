@@ -24,7 +24,6 @@
    :dbname "secrets"
    :host "localhost"
    :user "postgres"
-  ;  :password "J2gnFFrudQLmnGbiCUiDEzWh"
    :stringtype "unspecified"})
 
 (defn get-secrets []
