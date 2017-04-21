@@ -5,7 +5,7 @@
             [compojure.route :as route]
             [compojure.core :refer [GET POST PUT defroutes]]
             [hiccup.page :refer [include-js include-css html5]]
-            [ring.util.response :refer [content-type resource-response response]]
+            [ring.util.response :refer [content-type file-response resource-response response]]
             [ring.middleware.json :as middleware]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
 
@@ -26,8 +26,9 @@
    :user "postgres"
    :stringtype "unspecified"})
 
-(defn get-secrets []
-  (sql/query pg-db "select * from secrets"))
+(defn get-secrets [] (sql/query pg-db "select * from secrets"))
+
+(defn get-secret-by-code [{code :code}] {:secret (sql/query pg-db (str "select * from secrets where code = '" code "'"))})
 
 (defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
@@ -40,8 +41,7 @@
   (str status))
 
 (defn get-music [{code :code}]
-  (sql/query pg-db
-    (str "select status from secrets where code = '" code "'")))
+  (file-response "/Users/ryanmoore/Dev/education/clojure/compojure-secrets/resources/music.zip"))
 
 (def create-table
   (sql/create-table-ddl
@@ -70,6 +70,7 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
+  (GET "/secrets/code" {params :params} (response (get-secret-by-code params)))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
   (GET "/music" {params :params} (get-music params))
