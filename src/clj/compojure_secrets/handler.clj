@@ -28,7 +28,7 @@
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
 
-(defn get-secret-by-code [{code :code}] {:secret (sql/query pg-db (str "select * from secrets where code = '" code "'"))})
+(defn get-secret-by-code [code] {:secret (sql/query pg-db (str "select * from secrets where code = '" code "'"))})
 
 (defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
@@ -39,6 +39,9 @@
   (sql/update! pg-db :secrets
     {:status status} ["id = ?" id])
   (str status))
+
+(defn get-status-for-secret [{code :code}]
+  ({:code code}))
 
 (defn get-music [{code :code}]
   (file-response "/Users/ryanmoore/Dev/education/clojure/compojure-secrets/resources/music.zip"))
@@ -70,7 +73,7 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
-  (GET "/secrets/code" {params :params} (response (get-secret-by-code params)))
+  (GET "/secrets/:code" [code] code)
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
   (GET "/music" {params :params} (get-music params))
