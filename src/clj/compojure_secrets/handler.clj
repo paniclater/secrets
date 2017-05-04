@@ -73,7 +73,7 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
-  (GET "/secrets/:code" [code] code)
+  (GET "/secrets/:code" [code] (response (get-secret-by-code code)))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
   (GET "/music" {params :params} (get-music params))
