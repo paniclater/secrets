@@ -32,7 +32,11 @@
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
         status (:status secret)]
-    {:status status}))
+    (cond
+      (= status "APPROVED") {:status "APPROVED"}
+      (= status "PENDING")  {:status "PENDING"}
+      (= status "REJECTED") {:status "REJECTED"}
+      :else {:status "NOT FOUND"})))
 
 (defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
