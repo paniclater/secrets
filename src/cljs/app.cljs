@@ -1,9 +1,24 @@
+ ;;Requirements
+ ;;1. Submit a Secret, get confirmation back - [x]
+ ;;2. Submit a Code, get Response - [ ]
+ ;; - If approved, get success response and download - [ ] 200
+ ;; - If denied,   get denied response - [ ] (402 payment required)
+ ;; - If pending,  get pending response - [ ] (204 no content)
+ ;;3. Encrypt Secrets in database - [ ]
+ ;;4. Routes?
+ ;;5. Styling - [ ]
+
 (ns compojore-secrets.core
   (:require [reagent.core :as r]
             [ajax.core :refer [GET POST]]))
 (enable-console-print!)
 
-(def state (r/atom {:secrets [{:text "secrets haven't been fetched yet"}] :secret "" :code ""}))
+(def state (r/atom {
+                    :secrets [{:text "secrets haven't been fetched yet"}]
+                    :secret ""
+                    :code ""
+                    :prompt "Send me a secret and if it is deemed worthy you will be rewarded with the luscious sounds of Agatha Frisky"
+                   }))
 
 (defn list-secrets []
   [:ul
