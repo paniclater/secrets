@@ -27,6 +27,8 @@
 
 (defn handler [response] (println response))
 
+(defn post-secret-handler [response] (swap! state #(assoc % :prompt (concat "Your code " (:code response)))))
+(defn get-music-handler [response] (println response))
 (defn get-secrets-handler [response]
   (swap! state #(assoc % :secrets response)))
 
@@ -39,9 +41,10 @@
 (defn post-secret []
   (POST "/secrets"
     {:format :json
+     :keywords? true
      :response-format :json
      :params {:text (:secret @state)}
-     :handler handler}))
+     :handler post-secret-handler}))
 
 (defn clear-secrets []
   (swap! state (fn [a] (assoc a :secrets []))))
@@ -52,18 +55,19 @@
 (defn update-code [event]
   (swap! state (fn [a] (assoc a :code (-> event .-target .-value)))))
 
-(defn get-secret-by-code []
-  (GET "/secrets/code"
-    {:format :json
-     :response-format :json
-     :keywords? true
-     :handler handler
-     :params {:code (:code @state)}}))
+(defn get-music []
+  (let [url (str "secrets/" (:code @state))]
+    (println url)
+    u(GET url
+      {:format :json
+       :response-format :json
+       :keywords? true
+       :handler get-music-handler})))
 
 (defn app []
   [:div
     [:h2 "secrets"]
-    [list-secrets]
+    [:p (:prompt @state)]
     [:button {:on-click get-secrets} "Get Secrets"]
     [:button {:on-click clear-secrets} "Clear Secrets"]
     [:div
@@ -73,8 +77,7 @@
     [:div
       [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
       [:p (:code @state)]
-      [:button {:on-click get-secret-by-code} "Get Secret By Code"]]])
-
+      [:button {:on-click get-music}  "Get Music By Code"]]])
 
 (defn render-simple []
     (r/render [app]
