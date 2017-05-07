@@ -5,7 +5,7 @@
             [compojure.route :as route]
             [compojure.core :refer [GET POST PUT defroutes]]
             [hiccup.page :refer [include-js include-css html5]]
-            [ring.util.response :refer [content-type file-response resource-response response]]
+            [ring.util.response :refer [content-type file-response not-found resource-response response status]]
             [ring.middleware.json :as middleware]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
 
@@ -31,12 +31,12 @@
 (defn get-music [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
-        status (:status secret)]
+        secretStatus (:status secret)]
     (cond
-      (= status "APPROVED") {:status "APPROVED"}
-      (= status "PENDING")  {:status "PENDING"}
-      (= status "REJECTED") {:status "REJECTED"}
-      :else {:status "NOT FOUND"})))
+      (= secretStatus "APPROVED") (file-response "/Users/ryanmoore/Dev/education/clojure/compojure-secrets/resources/music.zip")
+      (= secretStatus "PENDING")  (status (response {:status "PENDING"}) 202)
+      (= secretStatus "REJECTED") (status (response :status "REJECTED") 402)
+      :else (not-found {:status "NOT FOUND"}))))
 
 (defn add-secret [{text :text}]
   (sql/insert! pg-db :secrets
@@ -50,9 +50,6 @@
 
 (defn get-status-for-secret [{code :code}]
   ({:code code}))
-
-;;(defn get-music [{code :code}]
-;;  (file-response "/Users/ryanmoore/Dev/education/clojure/compojure-secrets/resources/music.zip"))
 
 (def create-table
   (sql/create-table-ddl
@@ -81,10 +78,9 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
-  (GET "/secrets/:code" [code] (response (get-music code)))
+  (GET "/secrets/:code" [code] (get-music code))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
-;;  (GET "/music" {params :params} (get-music params))
 
   (route/resources "/")
   (route/not-found "Not Found"))
