@@ -17,7 +17,7 @@
                  [reagent "0.6.1"]]
   :plugins [[lein-cljsbuild "1.1.5"]
             [lein-ring "0.9.7"]]
-  :ring {:handler compojure-secrets.handler/app}
+  :ring {:handler secrets.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring/ring-mock "0.3.0"]]}}
