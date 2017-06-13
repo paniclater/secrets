@@ -1,4 +1,4 @@
-(ns compojure-secrets.handler
+(ns secrets.handler
 
   (:require [clojure.string :as string]
             [clojure.java.jdbc :as sql]

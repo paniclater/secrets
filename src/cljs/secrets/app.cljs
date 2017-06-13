@@ -48,7 +48,10 @@
 
 (defn app []
   [:div
-    [:h2 "secrets"]
+    [:h2 "gives a secrets, gets a musics"]
+    [:p "they writes the secret, they clicks the send, we reviews the secret, we send the code, they writes the code somewhere safe"]
+    [:p "we waits, we reads the secret, we rates the secret"]
+    [:p "they comes back, they writes the code, they clicks the send, if the secret is tasty, we sends the music"]
     [:div
       [:textarea {:rows 30 :placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
       [:button {:on-click post-secret} "Submit Secret"]]
