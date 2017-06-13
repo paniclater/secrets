@@ -13,24 +13,22 @@
             [ajax.core :refer [GET POST]]))
 (enable-console-print!)
 
-(def state (r/atom {
-                    :secrets [{:text "secrets haven't been fetched yet"}]
+(def state (r/atom {:secrets [{:text "secrets haven't been fetched yet"}]
                     :secret ""
                     :code ""
-                    :prompt "Send me a secret and if it is deemed worthy you will be rewarded with the luscious sounds of Agatha Frisky"
-                   }))
+                    :prompt "Send me a secret and if it is deemed worthy you will be rewarded with the luscious sounds of Agatha Frisky"}))
 
 (defn list-secrets []
   [:ul
     (for [secret (:secrets @state)]
       ^{:key secret} [:li (:text secret)])])
 
-(defn handler [response] (println response))
-
 (defn post-secret-handler [response] (swap! state #(assoc % :prompt (concat "Your code " (:code response)))))
-(defn get-music-handler [response] (println response))
+(defn get-music-handler [response] (println (:headers response)))
+
 (defn get-secrets-handler [response]
   (swap! state #(assoc % :secrets response)))
+
 
 (defn get-secrets []
   (GET "/secrets"
@@ -57,8 +55,7 @@
 
 (defn get-music []
   (let [url (str "secrets/" (:code @state))]
-    (println url)
-    u(GET url
+    (GET url
       {:format :json
        :response-format :json
        :keywords? true
