@@ -29,7 +29,14 @@
      :params {:text (:secret @state)}
      :handler post-secret-handler}))
 
-(defn get-music-handler [response] (println response))
+(defn get-music-handler [response]
+  (let [status (:status response)]
+    (cond
+      (= "PENDING" status) (println "we has not reviewed the secrets yets")
+      (= "APPROVED" status) (println "here they gets the musics")
+      (= "REJECTED" status) (println "the secrets was not very good, they sends us anothers, pls")
+      :else (println "we could not find these codes, please try again"))))
+
 (defn get-music []
   (let [url (str "secrets/" (:code @state))]
     (GET url
