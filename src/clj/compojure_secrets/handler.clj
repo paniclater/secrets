@@ -39,9 +39,10 @@
       :else (not-found {:status "NOT FOUND"}))))
 
 (defn add-secret [{text :text}]
-  (sql/insert! pg-db :secrets
-    {:code (code) :text text :status "PENDING"})
-  {:code (code)})
+  (let [new-code (code)]
+    (sql/insert! pg-db :secrets
+      {:code new-code :text text :status "PENDING"})
+    {:code new-code}))
 
 (defn update-secret [{id :id status :status}]
   (sql/update! pg-db :secrets
