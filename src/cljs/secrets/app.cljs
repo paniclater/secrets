@@ -16,7 +16,7 @@
 ;; STATE
 (def state (r/atom {:secret ""
                     :code ""
-                    :prompt "Send me a secret and if it is deemed worthy you will be rewarded with the luscious sounds of Agatha Frisky"}))
+                    :prompt "they sends the code, we sends the response"}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTTP REQUESTS AND HANDLERS
@@ -40,7 +40,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; APP STATE HANDLERS
-
 (defn update-secret [event]
   (swap! state (fn [a] (assoc a :secret (-> event .-target .-value)))))
 (defn update-code [event]
@@ -52,10 +51,13 @@
     [:p "they writes the secret, they clicks the send, we reviews the secret, we send the code, they writes the code somewhere safe"]
     [:p "we waits, we reads the secret, we rates the secret"]
     [:p "they comes back, they writes the code, they clicks the send, if the secret is tasty, we sends the music"]
+    [:hr]
     [:div
       [:textarea {:rows 30 :placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
       [:button {:on-click post-secret} "Submit Secret"]]
+    [:hr]
     [:div
+      [:p (:prompt @state)]
       [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
       [:button {:on-click get-music}  "Get Music By Code"]]])
 
