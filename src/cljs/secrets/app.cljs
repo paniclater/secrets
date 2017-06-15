@@ -31,12 +31,15 @@
 
 (defn update-prompt [new-prompt] (swap! state #(assoc % :prompt new-prompt)))
 (defn get-music-handler [response]
+  (cond
+    (= (:status response) "PENDING") (update-prompt "their secrets has not been weighed yet")
+    :else (println response)))
+
+(defn get-music-error-handler [response]
   (let [status (:status response)]
     (cond
-      (= "PENDING" status) (update-prompt "we has not reviewed the secrets yets")
-      (= "APPROVED" status) (update-prompt "here they gets the musics")
-      (= "REJECTED" status) (update-prompt "the secrets was not very good, they sends us anothers, pls")
-      :else (update-prompt "we could not find these codes, please try again"))))
+      (= status 402) (update-prompt "their secrets was weighed and found wanting")
+      :else (println "code not found"))))
 
 (defn get-music []
   (let [url (str "secrets/" (:code @state))]
@@ -44,7 +47,8 @@
       {:format :json
        :response-format :json
        :keywords? true
-       :handler get-music-handler})))
+       :handler get-music-handler
+       :error-handler get-music-error-handler})))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; APP STATE HANDLERS
