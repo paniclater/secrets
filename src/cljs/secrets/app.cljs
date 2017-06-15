@@ -29,13 +29,14 @@
      :params {:text (:secret @state)}
      :handler post-secret-handler}))
 
+(defn update-prompt [new-prompt] (swap! state #(assoc % :prompt new-prompt)))
 (defn get-music-handler [response]
   (let [status (:status response)]
     (cond
-      (= "PENDING" status) (println "we has not reviewed the secrets yets")
-      (= "APPROVED" status) (println "here they gets the musics")
-      (= "REJECTED" status) (println "the secrets was not very good, they sends us anothers, pls")
-      :else (println "we could not find these codes, please try again"))))
+      (= "PENDING" status) (update-prompt "we has not reviewed the secrets yets")
+      (= "APPROVED" status) (update-prompt "here they gets the musics")
+      (= "REJECTED" status) (update-prompt "the secrets was not very good, they sends us anothers, pls")
+      :else (update-prompt "we could not find these codes, please try again"))))
 
 (defn get-music []
   (let [url (str "secrets/" (:code @state))]
@@ -48,9 +49,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; APP STATE HANDLERS
 (defn update-secret [event]
-  (swap! state (fn [a] (assoc a :secret (-> event .-target .-value)))))
+  (swap! state #(assoc % :secret (-> event .-target .-value))))
 (defn update-code [event]
-  (swap! state (fn [a] (assoc a :code (-> event .-target .-value)))))
+  (swap! state #(assoc % :code (-> event .-target .-value))))
 
 (defn app []
   [:div
