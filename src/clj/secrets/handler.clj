@@ -28,7 +28,14 @@
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
 
-(defn get-music [code] (file-response "/Users/ryanmoore/Dev/education/clojure/secrets/resources/music.zip"))
+(defn get-music [code]
+  (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
+        secret (first secrets)
+        secretStatus (:status secret)]
+    (if (= secretStatus "APPROVED")
+      (file-response "/Users/ryanmoore/Dev/education/clojure/secrets/resources/music.zip")
+      (status (response {:error "NOT APPROVED"}) 400))))
+
 
 (defn check-status [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
