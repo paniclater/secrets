@@ -73,7 +73,7 @@
       [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
       [:button {:on-click check-secret-status}  "Check status by entering code"]]
     [:div
-      [:a {:href "/music.zip"} "You're Approved! Click Here To Download!"]]])
+      [:a {:href (str  "/music/" (:code @state) "/agatha-frisky.zip")} "You're Approved! Click Here To Download!"]]])
 
 (defn render-app []
     (r/render [app]
