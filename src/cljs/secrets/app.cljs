@@ -30,25 +30,25 @@
      :handler post-secret-handler}))
 
 (defn update-prompt [new-prompt] (swap! state #(assoc % :prompt new-prompt)))
-(defn get-music-handler [response]
+(defn check-secret-status-handler [response]
   (cond
     (= (:status response) "PENDING") (update-prompt "their secrets has not been weighed yet")
-    :else (println response)))
+    (= (:status response) "APPROVED") (update-prompt "their secrets has been found worthy!")))
 
-(defn get-music-error-handler [response]
+(defn check-secret-status-error-handler [response]
   (let [status (:status response)]
     (cond
       (= status 402) (update-prompt "their secrets was weighed and found wanting")
       :else (println "code not found"))))
 
-(defn get-music []
+(defn check-secret-status []
   (let [url (str "secrets/" (:code @state))]
     (GET url
       {:format :json
        :response-format :json
        :keywords? true
-       :handler get-music-handler
-       :error-handler get-music-error-handler})))
+       :handler check-secret-status-handler
+       :error-handler check-secret-status-error-handler})))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; APP STATE HANDLERS
@@ -71,7 +71,9 @@
     [:div
       [:p (:prompt @state)]
       [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
-      [:button {:on-click get-music}  "Get Music By Code"]]])
+      [:button {:on-click check-secret-status}  "Get Music By Code"]]
+    [:div
+      [:button {:on-click get-music} "You're Approved! Click Here To Download!"]]])
 
 (defn render-app []
     (r/render [app]
