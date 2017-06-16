@@ -32,10 +32,11 @@
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
         secretStatus (:status secret)]
+    (println (concat "Secret status:  " secretStatus))
     (cond
-      (= secretStatus "APPROVED") (file-response "/Users/ryanmoore/Dev/education/clojure/compojure-secrets/resources/music.zip")
+      (= secretStatus "APPROVED") (response {:status "APPROVED"})
       (= secretStatus "PENDING")  (status (response {:status "PENDING"}) 202)
-      (= secretStatus "REJECTED") (status (response :status "REJECTED") 402)
+      (= secretStatus "REJECTED") (status (response {:status "REJECTED"}) 402)
       :else (not-found {:status "NOT FOUND"}))))
 
 (defn add-secret [{text :text}]
