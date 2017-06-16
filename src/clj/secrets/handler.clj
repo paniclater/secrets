@@ -28,6 +28,8 @@
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
 
+(defn get-music [] (file-response "/Users/ryanmoore/Dev/education/clojure/secrets/resources/music.zip"))
+
 (defn check-status [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
@@ -81,6 +83,7 @@
 
   (GET  "/secrets" [] (response (get-secrets)))
   (GET "/secrets/:code" [code] (check-status code))
+  (GET "/music.zip" [] (get-music))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
 
