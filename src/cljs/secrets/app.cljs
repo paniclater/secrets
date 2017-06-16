@@ -71,7 +71,7 @@
     [:div
       [:p (:prompt @state)]
       [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
-      [:button {:on-click check-secret-status}  "Get Music By Code"]]
+      [:button {:on-click check-secret-status}  "Check status by entering code"]]
     [:div
       [:button {:on-click get-music} "You're Approved! Click Here To Download!"]]])
 
