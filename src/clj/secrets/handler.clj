@@ -28,7 +28,7 @@
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
 
-(defn get-music [code]
+(defn check-status [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
         secretStatus (:status secret)]
@@ -80,7 +80,7 @@
       (include-js "/index.js")))
 
   (GET  "/secrets" [] (response (get-secrets)))
-  (GET "/secrets/:code" [code] (get-music code))
+  (GET "/secrets/:code" [code] (check-status code))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
 
