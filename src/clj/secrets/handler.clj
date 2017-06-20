@@ -24,6 +24,7 @@
    :dbname "secrets"
    :host "localhost"
    :user "secrets"
+   :password "LjYAbMGpFGdohDmJngx3aRyX"
    :stringtype "unspecified"})
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
