@@ -23,7 +23,7 @@
   {:dbtype "postgresql"
    :dbname "secrets"
    :host "localhost"
-   :user "postgres"
+   :user "secrets"
    :stringtype "unspecified"})
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
