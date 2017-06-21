@@ -1,12 +1,13 @@
  ;;Requirements
  ;;1. Submit a Secret, get confirmation back - [x]
- ;;2. Submit a Code, get Response - [ ]
- ;; - If approved, get success response and download - [ ] 200
- ;; - If denied,   get denied response - [ ] (402 payment required)
- ;; - If pending,  get pending response - [ ] (204 no content)
+ ;;2. Submit a Code, get Response - [x]
+ ;; - If approved, get success response and download - [x] 200
+ ;; - If denied,   get denied response - [x] (402 payment required)
+ ;; - If pending,  get pending response - [x] (204 no content)
  ;;3. Encrypt Secrets in database - [ ]
  ;;4. Routes?
  ;;5. Styling - [ ]
+ ;;6. Hide download button unless approved. - [ ]
 
 (ns secrets.core
   (:require [reagent.core :as r]
@@ -32,15 +33,15 @@
 
 (defn check-secret-status-handler [response]
   (cond
-    (= (:status response) "PENDING") (update-prompt "their secrets has not been weighed yet")
-    (= (:status response) "APPROVED") (update-prompt "their secrets has been found worthy!")
-    :else (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com")))
+    (= (:status response) "PENDING") (update-prompt "their secrets has not been weighed yet" false)
+    (= (:status response) "APPROVED") (update-prompt "their secrets has been found worthy!" true)
+    :else (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com" false)))
 
 (defn check-secret-status-error-handler [response]
   (let [status (:status response)]
     (if (= status 402)
-      (update-prompt "their secrets was weighed and found wanting")
-      (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com"))))
+      (update-prompt "their secrets was weighed and found wanting" false)
+      (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com" false))))
 
 (defn check-secret-status []
   (let [url (str "secrets/" (:code @state))]
@@ -57,10 +58,8 @@
   (swap! state #(assoc % :secret (-> event .-target .-value))))
 (defn update-code [event]
   (swap! state #(assoc % :code (-> event .-target .-value))))
-(defn toggle-show-download-link [shouldShow]
-  (swap! state #(assoc & :show-download-link shouldShow)))
-(defn update-prompt [new-prompt]
-  (swap! state #(assoc % :prompt new-prompt)))
+(defn update-prompt [new-prompt show-download-link]
+  (swap! state #(assoc % :prompt new-prompt :show-download-link show-download-link)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; REAGENT COMPONENTS
@@ -78,7 +77,8 @@
 (defn download-link []
   [:div
     [:a
-     {:href (str "music/" (:code @state) "/agatha-frisky.zip")}
+     {:href (str "music/" (:code @state) "/agatha-frisky.zip")
+      :target "_blank"}
      "Click Here To Download!"]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -92,8 +92,8 @@
     [:hr]
     [secret-submitter]
     [:hr]
-    [secret-checker]
-    [download-link]])
+    (if (not (:show-download-link @state)) [secret-checker])
+    (if (:show-download-link @state) [download-link])])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; REAGENT MOUNT
