@@ -84,7 +84,7 @@
     (html5
       [:head
         [:meta {:charset "utf-8"}]
-        [:title "my first clojurescript"]]
+        [:title "Agatha Frisky Exchanges Music For Secrets"]]
       [:div#root [:h3 "doing some html"]]
       (include-js "/index.js")))
 
