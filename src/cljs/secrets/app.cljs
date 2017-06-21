@@ -17,7 +17,7 @@
 ;; STATE
 (def state (r/atom {:secret ""
                     :code ""
-                    :prompt "they sends the code, we sends the response"
+                    :prompt ""
                     :show-download-link false}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -79,16 +79,19 @@
     [:a
      {:href (str "music/" (:code @state) "/agatha-frisky.zip")
       :target "_blank"}
-     "Click Here To Download!"]])
+     "Your Secret is Approved!, Click Here To Download!"]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PARENT COMPONENT
 (defn app []
   [:div
-    [:h2 "gives a secrets, gets a musics"]
-    [:p "they writes the secret, they clicks the send, we reviews the secret, we send the code, they writes the code somewhere safe"]
-    [:p "we waits, we reads the secret, we rates the secret"]
-    [:p "they comes back, they writes the code, they clicks the send, if the secret is tasty, we sends the music"]
+    [:h2 "How This Works:"]
+    [:p "You write a secret in the text box below and submit it."]
+    [:p "The secret will be submitted to Agatha Frisky and you will see a code below"]
+    [:p "Keep the code! Write it somewhere safe! Email it to yourself"]
+    [:p "Within 6 hours your secret will be reviewed and you can come back, type your code in the box and find out if it was approved or rejected"]
+    [:p "If it was approved, you will see a link to download Tarred And Pleasured, the latest Agatha Frisky album"]
+    [:p "If it is rejected, try another! Most likely it was rejected because you are a bot or tried to spam the input. So Don't Do That."]
     [:hr]
     [secret-submitter]
     [:hr]
