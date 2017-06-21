@@ -34,7 +34,7 @@
         secret (first secrets)
         secretStatus (:status secret)]
     (if (= secretStatus "APPROVED")
-      (file-response "/Users/ryanmoore/Dev/education/clojure/secrets/resources/music.zip")
+      (file-response "../music.zip")
       (status (response {:error "NOT APPROVED"}) 400))))
 
 (defn check-status [code]
