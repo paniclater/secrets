@@ -22,7 +22,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTTP REQUESTS AND HANDLERS
-(defn post-secret-handler [response] (swap! state #(assoc % :prompt (concat "Your code " (:code response)))))
+(defn post-secret-handler [response] (swap! state #(assoc % :prompt (str "Your code is " (:code response) ". Please write it down somewhere safe and check back in about 6 hours to see if it is approved!") :show-download-link false)))
 (defn post-secret []
   (POST "/secrets"
     {:format :json
@@ -33,14 +33,14 @@
 
 (defn check-secret-status-handler [response]
   (cond
-    (= (:status response) "PENDING") (update-prompt "their secrets has not been weighed yet" false)
-    (= (:status response) "APPROVED") (update-prompt "their secrets has been found worthy!" true)
+    (= (:status response) "PENDING") (update-prompt "Your secret has not been reviewed yet, please check back soon! We endeavor to review all secrets within 6 hours of submission" false)
+    (= (:status response) "APPROVED") (update-prompt "Your secret has been reviewed and found worthy!" true)
     :else (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com" false)))
 
 (defn check-secret-status-error-handler [response]
   (let [status (:status response)]
     (if (= status 402)
-      (update-prompt "their secrets was weighed and found wanting" false)
+      (update-prompt "Unfortunately your secret was weighed and found wanting, probably because you spammed the input or are a bot. Try again!" false)
       (update-prompt "Uh oh, something went wrong, please email ryan@paniclater.com" false))))
 
 (defn check-secret-status []
@@ -59,6 +59,7 @@
 (defn update-code [event]
   (swap! state #(assoc % :code (-> event .-target .-value))))
 (defn update-prompt [new-prompt show-download-link]
+  (println new-prompt show-download-link)
   (swap! state #(assoc % :prompt new-prompt :show-download-link show-download-link)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
