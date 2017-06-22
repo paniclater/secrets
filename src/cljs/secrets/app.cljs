@@ -65,22 +65,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; REAGENT COMPONENTS
 (defn secret-submitter []
-  [:div.secrets-app__secret-submitter
-    [:textarea.secrets-app__secret-submitter-textarea {:placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
+  [:div.secret-submitter
+    [:textarea.secret-submitter__textarea {:placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
     [:button.button {:on-click post-secret} "submit secret"]])
 
 (defn secret-checker []
   [:div
-    [:p (:prompt @state)]
-    [:input.code-input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
-    [:button.button {:on-click check-secret-status}  "check status"]])
+    [:input.secret-checker__input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
+    [:button.button {:on-click check-secret-status}  "check status"]
+    [:p.secret-checker__prompt (:prompt @state)]])
 
 (defn download-link []
   [:div
-    [:a
-     {:href (str "music/" (:code @state) "/agatha-frisky.zip")
-      :target "_blank"}
-     "Your Secret is Approved!, Click Here To Download!"]])
+   [:button.download-button
+     [:a.download-link
+       {:href (str "music/" (:code @state) "/agatha-frisky.zip")
+        :target "_blank"}
+       "Your Secret is Approved, Click Here To Download!"]]])
 
 (defn header []
   [:div.secrets-app__header

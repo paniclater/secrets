@@ -60,14 +60,15 @@ h1, h2, h3, h4, h5, p {
   text-decoration: none;
   width: 120px;
   padding: 1px;
+  box-sizing: border-box;
 }
 
-button:hover {
+.button:hover {
   background: #000;
   color: #FFF;
 }
 
-.code-input {
+.secret-checker__input {
   background: transparent;
   border: 1px solid #888;
   border-right: none;
@@ -76,18 +77,58 @@ button:hover {
   line-height: 2em;
   text-align: center;
   text-decoration: none;
-  width: 200px;
+  width: 300px;
   outline: none;
+  box-sizing: border-box;
+}
+.secret-checker__prompt {
+  margin: 10px 0;
+  background: #000;
+  color: #FFF;
+  font-size: 1em;
+  line-height: 2em;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.secrets-app__secret-submitter {
+.secret-submitter {
   margin: 10px 0;
 }
 
-.secrets-app__secret-submitter-textarea {
+.secret-submitter__textarea {
   width: 100%;
   height: 150px;
   margin: 10px 0;
   resize: none;
   outline: none;
+  box-sizing: border-box;
 }
+
+.download-button {
+  background: transparent;
+  border: 1px solid #000;
+  color: #000;
+  font-size: 1em;
+  line-height: 2em;
+  text-align: center;
+  text-decoration: none;
+  width: 400px;
+  padding: 1px;
+  box-sizing: border-box;
+}
+
+.download-button:hover {
+  background: #000;
+  color: #FFF;
+}
+
+.download-button:hover a {
+  color: #FFF;
+}
+.download-link {
+  text-decoration: none;
+  color: #000;
+}
+
+.download-link k
