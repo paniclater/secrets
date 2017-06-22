@@ -22,7 +22,13 @@
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring/ring-mock "0.3.0"]]}}
   :cljsbuild
-  {:builds [{:source-paths ["src/cljs"]
+  {:builds [
+            {:source-paths ["src/cljs"]
              :compiler {:output-to "resources/public/index.js"
                         :optimizations :whitespace
-                        :pretty-print true}}]})
+                        :pretty-print true}}
+            {:source-paths ["src/cljs"]
+             :compiler {:output-to "resources/public/index.js"
+                        :optimizations :advanced
+                        :pretty-print false}}]})
+
