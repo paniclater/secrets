@@ -94,7 +94,7 @@
       [:head
         [:meta {:charset "utf-8"}]
         [:title "Gettin that ole SSL on"]]
-      [:div#root [:h3 "f1b1059269854ff3846c3afdd174e5cc"]]))
+      [:div#root [:h3 "979675ff6d9c4513acbe8a8ae774d76f"]]))
 
   (GET  "/secrets" [] (response (get-secrets)))
   (GET "/secrets/:code" [code] (check-status code))
