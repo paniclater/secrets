@@ -1,0 +1,93 @@
+:root {
+  font-size: 16px;
+  font-family: helvetica, 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+textarea {
+  font-size: 16px;
+  font-family: helvetica, 'Open Sans', sans-serif;
+  font-weight: 400;
+  padding: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  min-height: 100vh;
+  max-width: 730px;
+  width: 100vw;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secrets-app {
+  width: 100%;
+  max-width: calc(100% - 20px);
+}
+
+.secrets-app__header {
+  margin: 10px 0;
+}
+
+.secrets-app__instructions {
+  margin: 10px 0;
+}
+
+.button {
+  background: transparent;
+  border: 1px solid #000;
+  color: #000;
+  font-size: 1em;
+  line-height: 2em;
+  text-align: center;
+  text-decoration: none;
+  width: 120px;
+  padding: 1px;
+}
+
+button:hover {
+  background: #000;
+  color: #FFF;
+}
+
+.code-input {
+  background: transparent;
+  border: 1px solid #888;
+  border-right: none;
+  color: #000;
+  font-size: 1em;
+  line-height: 2em;
+  text-align: center;
+  text-decoration: none;
+  width: 200px;
+  outline: none;
+}
+
+.secrets-app__secret-submitter {
+  margin: 10px 0;
+}
+
+.secrets-app__secret-submitter-textarea {
+  width: 100%;
+  height: 150px;
+  margin: 10px 0;
+  resize: none;
+  outline: none;
+}

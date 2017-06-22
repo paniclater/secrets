@@ -85,7 +85,8 @@
       [:head
         [:meta {:charset "utf-8"}]
         [:title "Agatha Frisky Exchanges Music For Secrets"]]
-      [:div#root [:h3 "doing some html"]]
+      [:div#root.container [:h3 "doing some html"]]
+      (include-css "/index.css")
       (include-js "/index.js")))
 
 
