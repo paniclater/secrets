@@ -65,15 +65,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; REAGENT COMPONENTS
 (defn secret-submitter []
-  [:div
-    [:textarea {:rows 30 :placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
-    [:button {:on-click post-secret} "Submit Secret"]])
+  [:div.secrets-app__secret-submitter
+    [:textarea.secrets-app__secret-submitter-textarea {:placeholder "enter a secret" :value (:secret @state) :on-change update-secret}]
+    [:button.button {:on-click post-secret} "submit secret"]])
 
 (defn secret-checker []
   [:div
     [:p (:prompt @state)]
-    [:input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
-    [:button {:on-click check-secret-status}  "Check status by entering code"]])
+    [:input.code-input {:placeholder "enter a code" :value (:code @state) :on-change update-code}]
+    [:button.button {:on-click check-secret-status}  "check status"]])
 
 (defn download-link []
   [:div
@@ -82,20 +82,26 @@
       :target "_blank"}
      "Your Secret is Approved!, Click Here To Download!"]])
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PARENT COMPONENT
-(defn app []
-  [:div
-    [:h2 "How This Works:"]
+(defn header []
+  [:div.secrets-app__header
+    [:h2 "How This Works:"]])
+(defn instructions []
+  [:div.secrets-app__instructions
     [:p "You write a secret in the text box below and submit it."]
     [:p "The secret will be submitted to Agatha Frisky and you will see a code below"]
     [:p "Keep the code! Write it somewhere safe! Email it to yourself"]
     [:p "Within 6 hours your secret will be reviewed and you can come back, type your code in the box and find out if it was approved or rejected"]
     [:p "If it was approved, you will see a link to download Tarred And Pleasured, the latest Agatha Frisky album"]
-    [:p "If it is rejected, try another! Most likely it was rejected because you are a bot or tried to spam the input. So Don't Do That."]
-    [:hr]
+    [:p "If it is rejected, try another! Most likely it was rejected because you are a bot or tried to spam the input. So Don't Do That."]])
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PARENT COMPONENT
+(defn app []
+  [:div.secrets-app
+    [header]
+    [instructions]
     [secret-submitter]
-    [:hr]
     (if (not (:show-download-link @state)) [secret-checker])
     (if (:show-download-link @state) [download-link])])
 
