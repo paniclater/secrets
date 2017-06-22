@@ -21,6 +21,16 @@
                     :show-download-link false}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; APP STATE HANDLERS
+(defn update-secret [event]
+  (swap! state #(assoc % :secret (-> event .-target .-value))))
+(defn update-code [event]
+  (swap! state #(assoc % :code (-> event .-target .-value))))
+(defn update-prompt [new-prompt show-download-link]
+  (println new-prompt show-download-link)
+  (swap! state #(assoc % :prompt new-prompt :show-download-link show-download-link)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTTP REQUESTS AND HANDLERS
 (defn post-secret-handler [response] (swap! state #(assoc % :prompt (str "Your code is " (:code response) ". Please write it down somewhere safe and check back in about 6 hours to see if it is approved!") :show-download-link false)))
 (defn post-secret []
@@ -51,16 +61,6 @@
        :keywords? true
        :handler check-secret-status-handler
        :error-handler check-secret-status-error-handler})))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; APP STATE HANDLERS
-(defn update-secret [event]
-  (swap! state #(assoc % :secret (-> event .-target .-value))))
-(defn update-code [event]
-  (swap! state #(assoc % :code (-> event .-target .-value))))
-(defn update-prompt [new-prompt show-download-link]
-  (println new-prompt show-download-link)
-  (swap! state #(assoc % :prompt new-prompt :show-download-link show-download-link)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; REAGENT COMPONENTS
@@ -94,7 +94,6 @@
     [:p "Within 6 hours your secret will be reviewed and you can come back, type your code in the box and find out if it was approved or rejected"]
     [:p "If it was approved, you will see a link to download Tarred And Pleasured, the latest Agatha Frisky album"]
     [:p "If it is rejected, try another! Most likely it was rejected because you are a bot or tried to spam the input. So Don't Do That."]])
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PARENT COMPONENT
