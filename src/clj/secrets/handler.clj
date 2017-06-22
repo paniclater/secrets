@@ -89,7 +89,7 @@
       (include-js "/index.js")))
 
 
-  (GET "/digicert" []
+  (GET "/.well-known/pki-validation/1713809fad5c4748b58ea109a0b7625c.txt" []
     (html5
       [:head
         [:meta {:charset "utf-8"}]
