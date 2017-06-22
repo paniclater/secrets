@@ -94,7 +94,7 @@
       [:head
         [:meta {:charset "utf-8"}]
         [:title "Gettin that ole SSL on"]]
-      [:div#root [:h3 "Please trust who I am, order #01624360 Ryan Moore"]]))
+      [:div#root [:h3 "Please trust who I am, order #01624360 Ryan Moore Token: f1b1059269854ff3846c3afdd174e5cc"]]))
 
   (GET  "/secrets" [] (response (get-secrets)))
   (GET "/secrets/:code" [code] (check-status code))
