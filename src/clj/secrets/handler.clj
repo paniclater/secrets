@@ -88,6 +88,14 @@
       [:div#root [:h3 "doing some html"]]
       (include-js "/index.js")))
 
+
+  (GET "/digicert" []
+    (html5
+      [:head
+        [:meta {:charset "utf-8"}]
+        [:title "Gettin that ole SSL on"]]
+      [:div#root [:h3 "Please trust who I am, order #01624360 Ryan Moore"]]))
+
   (GET  "/secrets" [] (response (get-secrets)))
   (GET "/secrets/:code" [code] (check-status code))
   (GET "/music/:code/agatha-frisky.zip" [code] (get-music code))
