@@ -1,6 +1,6 @@
 :root {
   font-family: helvetica, 'Open Sans', sans-serif;
-  font-weight: 400;
+  font-weight: 200;
   font-size: 12px
 }
 
@@ -147,7 +147,9 @@ h1, h2, h3, h4, h5, p {
 }
 
 @media (min-width: 321px) {
-  font-size: 16px;
+  :root {
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 730px) {
