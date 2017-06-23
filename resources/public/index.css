@@ -61,11 +61,22 @@ h1, h2, h3, h4, h5, p {
   width: 120px;
   padding: 1px;
   box-sizing: border-box;
+  outline: none;
+}
+
+.disabled-button {
+  color: #d7d7d7;
+  border: 1px solid #999;
 }
 
 .button:hover {
   background: #000;
   color: #FFF;
+}
+
+.disabled-button:hover {
+  background: transparent;
+  color: #d7d7d7;
 }
 
 .secret-checker__input {
