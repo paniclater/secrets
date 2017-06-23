@@ -1,14 +1,15 @@
 :root {
-  font-size: 16px;
   font-family: helvetica, 'Open Sans', sans-serif;
   font-weight: 400;
+  font-size: 12px
 }
 
 textarea {
-  font-size: 16px;
+  font-size: 1em;
   font-family: helvetica, 'Open Sans', sans-serif;
   font-weight: 400;
   padding: 10px;
+  border: 1px solid #888;
 }
 
 body {
@@ -32,7 +33,6 @@ h1, h2, h3, h4, h5, p {
 
 .container {
   min-height: 100vh;
-  max-width: 730px;
   width: 100vw;
   position: relative;
   margin: 0 auto;
@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, p {
   line-height: 2em;
   text-align: center;
   text-decoration: none;
-  width: 120px;
+  width: 100%;
   padding: 1px;
   box-sizing: border-box;
   outline: none;
@@ -86,15 +86,15 @@ h1, h2, h3, h4, h5, p {
 .secret-checker__input {
   background: transparent;
   border: 1px solid #888;
-  border-right: none;
   color: #000;
+  width: 100%;
   font-size: 1em;
   line-height: 2em;
   text-align: center;
   text-decoration: none;
-  width: 300px;
   outline: none;
   box-sizing: border-box;
+  margin: 0 0 10px 0;
 }
 .secret-checker__prompt {
   margin: 10px 0;
@@ -146,4 +146,25 @@ h1, h2, h3, h4, h5, p {
   color: #000;
 }
 
-.download-link k
+@media (min-width: 321px) {
+  font-size: 16px;
+}
+
+@media (min-width: 730px) {
+  .container {
+    max-width: 720px;
+  }
+  .button {
+    width: 120px;
+  }
+  .secret-checker__input {
+    border-right: none;
+    width: 300px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1080px;
+  }
+}

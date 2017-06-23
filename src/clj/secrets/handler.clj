@@ -84,6 +84,7 @@
     (html5
       [:head
         [:meta {:charset "utf-8"}]
+        [:meta {:name "viewport" :content "width=device-width"}]
         [:title "Agatha Frisky Exchanges Music For Secrets"]]
       [:div#root.container [:h3 "doing some html"]]
       (include-css "/index.css")
