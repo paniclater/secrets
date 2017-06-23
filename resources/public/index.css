@@ -16,6 +16,10 @@ body {
   padding: 0;
 }
 
+p {
+  line-height: 1.5em;
+}
+
 div {
   margin: 0;
   padding: 0;
