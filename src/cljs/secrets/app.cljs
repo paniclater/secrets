@@ -33,7 +33,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTTP REQUESTS AND HANDLERS
-(defn post-secret-handler [response] (swap! state #(assoc % :prompt (str "Your code is " (:code response) ". Write it down somewhere safe!") :show-download-link false)))
+(defn post-secret-handler [response] (swap! state #(assoc % :prompt (str "Your code is " (:code response) ". Write it down somewhere safe!") :show-download-link false :secret "")))
 (defn post-secret []
   (if (not (= "" (:secret @state)))
       (POST "/secrets"
