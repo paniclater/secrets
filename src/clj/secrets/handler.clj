@@ -85,6 +85,7 @@
       [:head
         [:meta {:charset "utf-8"}]
         [:meta {:name "viewport" :content "width=device-width"}]
+        [:link {:rel "icon" :href "/key.ico" :type "image/x-icon"}]
         [:title "Agatha Frisky Exchanges Music For Secrets"]]
       [:div#root.container [:h3 "doing some html"]]
       (include-css "/index.css")
