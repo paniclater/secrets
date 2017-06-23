@@ -34,7 +34,7 @@
         secret (first secrets)
         secretStatus (:status secret)]
     (if (= secretStatus "APPROVED")
-      (file-response "../music.zip")
+      (file-response "../Tarred_and_Pleasured_By_Agatha_Frisky.zip")
       (status (response {:error "NOT APPROVED"}) 400))))
 
 (defn check-status [code]
@@ -99,7 +99,7 @@
 
   (GET  "/secrets" [] (response (get-secrets)))
   (GET "/secrets/:code" [code] (check-status code))
-  (GET "/music/:code/agatha-frisky.zip" [code] (get-music code))
+  (GET "/music/:code/Tarred_and_Pleasured_By_Agatha_Frisky.zip" [code] (get-music code))
   (POST "/secrets" {body :body} (response (add-secret body)))
   (PUT "/secrets" {body :body} (update-secret body))
 
