@@ -1,18 +1,7 @@
-;;Requirements
-;;1. Submit a Secret, get confirmation back - [x]
-;;2. Submit a Code, get Response - [x]
-;; - If approved, get success response and download - [x] 200
-;; - If denied,   get denied response - [x] (402 payment required)
-;; - If pending,  get pending response - [x] (204 no content)
-;;3. Encrypt Secrets in database - [ ]
-;;4. Routes?
-;;5. Styling - [ ]
-;;6. Hide download button unless approved. - [ ]
-;;6. Disable buttons if boxes are empty
-
 (ns secrets.core
   (:require [reagent.core :as r]
             [ajax.core :refer [GET POST]]))
+
 (enable-console-print!)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; STATE
