@@ -9,15 +9,43 @@
             [ring.middleware.json :as middleware]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
 
+(defn id-generator-factory []
+  (let [new-id (atom 0)]
+    (fn []
+      (swap! new-id inc)
+      @new-id)))
+(def id-generator! (id-generator-factory))
+
 (defn code []
-  (loop [result []]
-    (if (= (count result) 4)
-      (string/join result)
-      (recur
-        (conj
-          result
-          (rand-nth
-            ["Billy" "Pilgrim" "Eichmann" "Angela" "Hoenikker" "Anita" "Elliot" "Rosewater" "Kilgore" "Trout" "Bertram" "Copeland" "Rumfoord"]))))))
+  (let [names ["Billy" "Pilgrim" "Eichmann" "Angela"
+               "Hoenikker" "Anita" "Elliot" "Rosewater"
+               "Kilgore" "Trout" "Bertram" "Copeland"
+               "Rumfoord" "Bryan" "Kelly" "Diana"
+               "Moon" "Glampers" "Dorothy" "Roy"
+               "Paul" "Proteus" "Wilbur" "Swain"
+               "Dwayne" "Hoover" "Ed" "Finnerty"
+               "Edgar" "Derby" "Edith" "Taft"
+               "Edward" "McCabe" "Eliot" "Rosewater"
+               "Felix" "Heonikker" "Francine" "Pefko"
+               "Frank" "Wirtanen" "George" "Kraft"
+               "Harold" "Ryan" "Harrison" "Bergeron"
+               "Harry" "Nash" "Horlick" "Minton"
+               "Howard" "Campbell" "Julian" "Castle"
+               "Kilgore" "Trout" "Kurt" "Vonnegut"
+               "Leon" "Trout" "Malachi" "Constant"
+               "Marilee" "Kemp" "Mary" "O'Hare"
+               "Melody" "Peterswald" "Montana" "Wildack"
+               "Naomi" "Faust" "Nestor" "Aamons"
+               "Paul" "Lazzaro" "Arthur" "Barnhouse"
+               "Rabo" "Karabekian" "Roland" "Weary"]]
+    (str (id-generator!)
+         (loop [result []]
+          (if (= (count result) 4)
+            (string/join result)
+            (recur
+              (conj
+                result
+                (rand-nth names))))))))
 
 (def pg-db
   {:dbtype "postgresql"
