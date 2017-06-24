@@ -1,6 +1,6 @@
-(defproject compojure-secrets "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+(defproject secrets "1.0.0"
+  :description "Exchanges Secrets for the Album Tarred and Feathered By Agatha Frisky"
+  :url "secrets.audio"
   :min-lein-version "2.0.0"
   :source-paths ["src/clj"]
   :dependencies [[org.clojure/clojure "1.8.0"]
