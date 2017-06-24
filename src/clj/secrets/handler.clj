@@ -18,7 +18,8 @@
    {:spit
     (appenders/spit-appender
       {:fname
-       "/Users/ryanmoore/Dev/education/clojure/secrets/secrets.log"})}})
+       "./secrets.log"})}})
+
 (timbre/set-level! :info)
 
 (defn id-generator-factory []
