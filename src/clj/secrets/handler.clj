@@ -1,13 +1,26 @@
 (ns secrets.handler
 
   (:require [clojure.string :as string]
+            [clojure.java.io :as io]
             [clojure.java.jdbc :as sql]
             [compojure.route :as route]
             [compojure.core :refer [GET POST PUT defroutes]]
             [hiccup.page :refer [include-js include-css html5]]
             [ring.util.response :refer [content-type file-response not-found resource-response response status]]
             [ring.middleware.json :as middleware]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [taoensso.timbre.appenders.core :as appenders]
+            [taoensso.timbre :as timbre]))
+
+(timbre/refer-timbre)
+(timbre/merge-config!
+  {:appenders
+   {:spit
+    (appenders/spit-appender
+      {:fname
+       "./secrets.log"})}})
+
+(timbre/set-level! :info)
 
 (defn id-generator-factory []
   (let [new-id (atom 0)]
@@ -57,19 +70,26 @@
 
 (defn get-secrets [] (sql/query pg-db "select * from secrets"))
 
+(defn log-and-return-music [code]
+  (info (str code " was entered and music downloaded"))
+  (file-response "../Tarred_and_Pleasured_By_Agatha_Frisky.zip"))
+
+(defn log-and-return-error [code]
+  (info (str code " was entered and error returned"))
+  (status (response {:error "NOT APPROVED"}) 400))
+
 (defn get-music [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
         secretStatus (:status secret)]
     (if (= secretStatus "APPROVED")
-      (file-response "../Tarred_and_Pleasured_By_Agatha_Frisky.zip")
-      (status (response {:error "NOT APPROVED"}) 400))))
+      (log-and-return-music code)
+      (log-and-return-error code))))
 
 (defn check-status [code]
   (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
         secret (first secrets)
         secretStatus (:status secret)]
-    (println (concat "Secret status:  " secretStatus))
     (cond
       (= secretStatus "APPROVED") (response {:status "APPROVED"})
       (= secretStatus "PENDING")  (status (response {:status "PENDING"}) 202)

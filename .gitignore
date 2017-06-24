@@ -10,3 +10,5 @@ pom.xml.asc
 *.zip
 /.lein-*
 /.nrepl-port
+
+secrets.log
