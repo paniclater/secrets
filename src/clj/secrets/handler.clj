@@ -88,7 +88,7 @@
           (log-and-return-error code)))))
 
 (defn check-status [code]
-  (if (= code "5ConstantO'HareBarnhouseSwain") (response {:status "APPROVED"}))
+  (if (= code "5ConstantO'HareBarnhouseSwain") (response {:status "APPROVED"})
       (let [secrets (sql/query pg-db (str "select * from secrets where code = '" code "'"))
             secret (first secrets)
             secretStatus (:status secret)]
@@ -97,7 +97,7 @@
           (= secretStatus "APPROVED") (response {:status "APPROVED"})
           (= secretStatus "PENDING")  (status (response {:status "PENDING"}) 202)
           (= secretStatus "REJECTED") (status (response {:status "REJECTED"}) 402)
-          :else (not-found {:status "NOT FOUND"}))))
+          :else (not-found {:status "NOT FOUND"})))))
 
 (defn add-secret [{text :text}]
   (let [new-code (code)]
