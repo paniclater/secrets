@@ -120,7 +120,8 @@ h1, h2, h3, h4, h5, p {
   box-sizing: border-box;
 }
 
-.download-button {
+.download-link {
+  display: inline-block;
   background: transparent;
   border: 1px solid #000;
   color: #000;
@@ -133,17 +134,10 @@ h1, h2, h3, h4, h5, p {
   box-sizing: border-box;
 }
 
-.download-button:hover {
+.download-link:hover {
   background: #000;
   color: #FFF;
-}
-
-.download-button:hover a {
-  color: #FFF;
-}
-.download-link {
   text-decoration: none;
-  color: #000;
 }
 
 @media (min-width: 321px) {
