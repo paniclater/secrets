@@ -73,7 +73,7 @@
   [:div
    [:button.download-button
      [:a.download-link
-       {:href (str "music/" (:code @state) "/Tarred_and_Pleasured_By_Agatha_Frisky.zip")
+       {:href (str "https://secrets.audio/music/" (:code @state) "/Tarred_and_Pleasured_By_Agatha_Frisky.zip")
         :target "_blank"}
        "Your Secret is Approved, Click Here To Download!"]]])
 
