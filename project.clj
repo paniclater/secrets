@@ -1,4 +1,4 @@
-(defproject secrets "1.0.2"
+(defproject secrets "1.0.3"
   :description "Exchanges Secrets for the Album Tarred and Feathered By Agatha Frisky"
   :url "secrets.audio"
   :min-lein-version "2.0.0"
