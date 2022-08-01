@@ -1,4 +1,4 @@
-# compojure-secrets
+# Secrets.Audio
 
 A small hobby / art project that provided a download link for an Agatha Frisky (the defunct band... not the current burlesque performer) album.
 ## Prerequisites
